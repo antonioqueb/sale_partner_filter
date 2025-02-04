@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Sale Partner Filter",
-    "version": "15.0.1.0.0",  # Ajusta a la convención de Odoo 17 si deseas
+    "version": "17",
     "summary": "Filtra productos en líneas de venta según company_registry del cliente.",
     "author": "Alphaqueb Consulting SAS",
     "website": "https://alphaqueb.com",
