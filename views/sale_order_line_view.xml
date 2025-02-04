@@ -1,14 +1,16 @@
-<!-- sale_order_line_view.xml -->
 <odoo>
     <record id="view_order_form_inherit_partner_filter" model="ir.ui.view">
         <field name="name">sale.order.form.partner.filter.inherit</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <!-- Si no quieres añadir nada más, puedes simplemente dejar este record vacío
-                 o añadir otros cambios. Pero el @api.onchange será suficiente para aplicar el filtro. -->
+            <!-- Insertamos un texto informativo tras el campo order_line -->
             <xpath expr="//field[@name='order_line']" position="after">
-                <label string="(Filtro de productos aplicado mediante @api.onchange)"/>
+                <div>
+                    <span style="font-weight: bold;">
+                        (Filtro de productos aplicado mediante @api.onchange)
+                    </span>
+                </div>
             </xpath>
         </field>
     </record>

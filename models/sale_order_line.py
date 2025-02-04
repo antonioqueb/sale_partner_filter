@@ -21,8 +21,8 @@ class SaleOrderLine(models.Model):
                 }
             }
         else:
-            # Si el partner no tiene company_registry o está vacío
-            # puedes decidir si mostrar todos los productos o ninguno
+            # Si el partner no tiene company_registry o está vacío,
+            # decides si mostrar todos los productos o ninguno.
             return {
                 'domain': {
                     'product_id': []
