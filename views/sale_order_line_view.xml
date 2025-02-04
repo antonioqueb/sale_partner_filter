@@ -15,7 +15,7 @@
                         (
                             "default_code",
                             "=like",
-                            (parent.partner_id.company_registry or "") + "%"
+                            (parent.company_registry or "") + "%"
                         )
                     ]
                 </attribute>
@@ -33,7 +33,7 @@
                         (
                             "default_code",
                             "=like",
-                            (parent.partner_id.company_registry or "") + "%"
+                            (parent.company_registry or "") + "%"
                         )
                     ]
                 </attribute>
