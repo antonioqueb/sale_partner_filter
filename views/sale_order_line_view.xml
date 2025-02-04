@@ -2,33 +2,30 @@
     <record id="view_order_form_inherit_partner_filter" model="ir.ui.view">
         <field name="name">sale.order.form.partner.filter.inherit</field>
         <field name="model">sale.order</field>
-        <!-- Heredamos la vista de formulario de la orden de venta -->
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
             <!-- 
-                Localizamos el tree (lista) que está dentro de order_line
-                y agregamos o modificamos el dominio del campo product_id.
+                1) Localizamos el tree (lista editable) de las líneas
+                   y modificamos el dominio del campo product_id.
             -->
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                <!-- 
-                    Usamos '=like' para que los productos aparezcan sólo 
-                    si su default_code *comienza* con partner_id.company_registry. 
-                -->
                 <attribute name="domain">
                     [
                         (
                             "default_code",
                             "=like",
-                            parent.partner_id.company_registry || '%'
+                            (parent.partner_id.company_registry or "") + "%"
                         )
                     ]
                 </attribute>
             </xpath>
 
-            <!-- 
-                Opcional: si tu edición de líneas está en vista "form" 
-                (por ejemplo, si usas 'Edit in a popup form view'), 
-                añade también el dominio análogo en la vista form de order_line:
+            <!--
+                2) Si usas un formulario emergente (popup) para editar
+                   las líneas, también modifica el dominio de product_id
+                   en esa vista form (opcional si tu configuración
+                   usa "editable='bottom'" o algo similar).
             -->
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
                 <attribute name="domain">
@@ -36,11 +33,12 @@
                         (
                             "default_code",
                             "=like",
-                            parent.partner_id.company_registry || '%'
+                            (parent.partner_id.company_registry or "") + "%"
                         )
                     ]
                 </attribute>
             </xpath>
+
         </field>
     </record>
 </odoo>
