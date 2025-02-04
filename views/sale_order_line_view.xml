@@ -2,15 +2,44 @@
     <record id="view_order_form_inherit_partner_filter" model="ir.ui.view">
         <field name="name">sale.order.form.partner.filter.inherit</field>
         <field name="model">sale.order</field>
+        <!-- Heredamos la vista de formulario de la orden de venta -->
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <!-- Insertamos un texto informativo tras el campo order_line -->
-            <xpath expr="//field[@name='order_line']" position="after">
-                <div>
-                    <span style="font-weight: bold;">
-                        (Filtro de productos aplicado mediante @api.onchange)
-                    </span>
-                </div>
+            <!-- 
+                Localizamos el tree (lista) que está dentro de order_line
+                y agregamos o modificamos el dominio del campo product_id.
+            -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <!-- 
+                    Usamos '=like' para que los productos aparezcan sólo 
+                    si su default_code *comienza* con partner_id.company_registry. 
+                -->
+                <attribute name="domain">
+                    [
+                        (
+                            "default_code",
+                            "=like",
+                            parent.partner_id.company_registry || '%'
+                        )
+                    ]
+                </attribute>
+            </xpath>
+
+            <!-- 
+                Opcional: si tu edición de líneas está en vista "form" 
+                (por ejemplo, si usas 'Edit in a popup form view'), 
+                añade también el dominio análogo en la vista form de order_line:
+            -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <attribute name="domain">
+                    [
+                        (
+                            "default_code",
+                            "=like",
+                            parent.partner_id.company_registry || '%'
+                        )
+                    ]
+                </attribute>
             </xpath>
         </field>
     </record>
